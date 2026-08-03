@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Can T1&#961; act as an alternative to contrast agents? — Ana Kostic</title>
+<meta name="description" content="Segmenting cardiac MRI scans from 41 patients at Karolinska Institutet, to compare the contrast-free map T1-rho against the contrast-based maps LGE and ECV.">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://anakostic.com/posts/cardiac-t1rho-mri.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Can T1ρ act as an alternative to contrast agents?">
+<meta property="og:description" content="Quantitative cardiac T1-rho MRI: segmentation and multi-modal comparison.">
+<meta property="og:image" content="https://anakostic.com/assets/img/seg-card.jpg">
+<meta property="og:url" content="https://anakostic.com/posts/cardiac-t1rho-mri.html">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="/assets/css/themes.css?v=6">
+<link rel="stylesheet" href="/assets/css/base.css?v=6">
+<script src="/assets/js/theme.js?v=6"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap site-header__inner">
+    <p class="site-title"><a href="/">Ana Kostic<small>Physics, imaging &amp; the night sky</small></a></p>
+    <nav class="site-nav" aria-label="Main">
+      <a href="/">Blog</a>
+      <a href="/about.html">About</a>
+      <a href="https://github.com/delphinusdelphis">GitHub</a>
+    </nav>
+    <div class="switcher" data-switcher></div>
+  </div>
+</header>
+
+<main id="main">
+<article>
+
+  <div class="banner banner--post">
+    <div class="wrap banner__inner">
+      <div class="card__meta">
+        <time class="dateline" datetime="2026-07-08">July 8, 2026</time>
+        <span class="tag">Research</span>
+        <span class="tag">MRI</span>
+        <span class="tag">Python</span>
+      </div>
+      <h1>Can T1&#961; act as an alternative to contrast agents?</h1>
+      <p class="lede">Cardiac MRI scans from 41 patients were segmented to test whether the
+        contrast-free map T1&#961; detects the same elevations as the contrast-based maps.</p>
+    </div>
+  </div>
+
+  <div class="wrap prose post-body">
+
+    <p class="byline">A project at <b>Karolinska Institutet</b>, Department of Molecular Medicine and
+      Surgery, under the direction of PhD student Pontus Pandurevic, carried out through
+      <a href="https://raysforexcellence.se/">Rays &ndash; Research Academy for Young Scientists</a>.</p>
+
+    <ul class="stats bleed">
+      <li><b>41</b><span>patients segmented, 16 LV segments each</span></li>
+      <li><b>85%</b><span>of LGE elevations also detected by T1&#961;</span></li>
+      <li><b>0.480</b><span>strongest correlation (T2 vs.&nbsp;T1&#961;)</span></li>
+      <li><b>0.047</b><span>weakest (ECV vs.&nbsp;T1&#961;, LGE-positive only)</span></li>
+    </ul>
+
+    <p>Myocardial fibrosis is a cardiac disease where scar tissue forms in the heart muscle
+      (myocardium) after an injury, such as an infarction. The scar tissue can stiffen the myocardium
+      and lead to heart failure.</p>
+
+    <p>The disease can be diagnosed from images produced by Magnetic Resonance Imaging (MRI). An MRI
+      of the heart is called Cardiovascular Magnetic Resonance (CMR). Different measurements yield
+      different maps, and these maps vary in how well they diagnose fibrosis. Late gadolinium-enhanced
+      imaging (LGE) is a valid clinical reference. It requires injection of a gadolinium-based
+      contrast agent (GBCA) to increase tissue contrast.</p>
+
+    <div class="note">
+      <p class="note__title">Why an alternative is needed</p>
+      <p>GBCA may cause nephrogenic systemic fibrosis in patients with renal disease. They are not
+        recommended for pregnant patients. They can also cause minor side effects, such as nausea and
+        headaches, and in rare cases allergic reactions. These groups cannot safely receive a GBCA
+        injection, so a contrast-free method is needed.</p>
+    </div>
+
+    <p>T1&#961; is a promising contrast-free technique, but further evidence is needed to support its
+      effectiveness. The aim of this project was to compare T1&#961; against the contrast-based maps
+      used in the clinic, and against the standard contrast-free map, to evaluate whether it can act
+      as an alternative.</p>
+
+    <h2>The maps</h2>
+
+    <p>MRI uses a strong static magnetic field, referred to as B0, together with radiofrequency (RF)
+      pulses. The maps are time measurements, based on the alignment of the precession of spin of
+      hydrogen nuclei. Each map is sensitive to something different.</p>
+
+    <p><b>T1</b> is the longitudinal relaxation time, i.e., the time it takes for the precession of
+      hydrogen nuclei to realign with B0 after being excited by an RF pulse.</p>
+
+    <p><b>T2</b> is the relaxation time in the transverse component of the net magnetization. Hydrogen
+      nuclei in different chemical environments do not precess at the same frequency, so the spins
+      dephase and the transverse component decays. T2 yields higher values when water volume
+      increases, which can indicate inflammation.</p>
+
+    <p><b>T1&#961;</b> also measures a longitudinal relaxation time, but against a different magnetic
+      field. An RF pulse tips the net magnetization 90 degrees into the transverse plane. A spin-lock
+      RF pulse of amplitude B1 then holds the spins there. T1&#961; is the time measured for
+      relaxation within the transverse plane, as the amplitude of B1 decreases and the spins dephase.
+      T1&#961; is particularly sensitive to water&ndash;macromolecule interactions, so it shows
+      increased values when extracellular matrix is present. This is the reason it is expected to
+      detect fibrosis.</p>
+
+    <p>The two contrast-based maps in this study were LGE, where the contrast agent accumulates in
+      scar tissue, and the extracellular volume fraction (ECV) of the myocardium.</p>
+
+    <div class="bleed">
+      <div class="grid grid-5">
+        <figure>
+          <a href="/assets/img/seg-map-t1.jpg"><img src="/assets/img/seg-map-t1.jpg" alt="T1 relaxation-time map of a cardiac MRI slice in a purple-to-yellow color scale, with a color bar on the right." loading="lazy"></a>
+          <figcaption><b>T1</b> &mdash; longitudinal relaxation</figcaption>
+        </figure>
+        <figure>
+          <a href="/assets/img/seg-map-t2.jpg"><img src="/assets/img/seg-map-t2.jpg" alt="T2 relaxation-time map of the same cardiac MRI slice." loading="lazy"></a>
+          <figcaption><b>T2</b> &mdash; transverse relaxation</figcaption>
+        </figure>
+        <figure>
+          <a href="/assets/img/seg-map-t1rho.jpg"><img src="/assets/img/seg-map-t1rho.jpg" alt="T1-rho relaxation-time map of the same cardiac MRI slice." loading="lazy"></a>
+          <figcaption><b>T1&#961;</b> &mdash; spin-lock relaxation</figcaption>
+        </figure>
+        <figure>
+          <a href="/assets/img/seg-map-lge.jpg"><img src="/assets/img/seg-map-lge.jpg" alt="Late gadolinium enhancement image of the same cardiac MRI slice, in grayscale." loading="lazy"></a>
+          <figcaption><b>LGE</b> &mdash; contrast-enhanced</figcaption>
+        </figure>
+        <figure>
+          <a href="/assets/img/seg-map-ecv.jpg"><img src="/assets/img/seg-map-ecv.jpg" alt="Extracellular volume fraction map of the same cardiac MRI slice." loading="lazy"></a>
+          <figcaption><b>ECV</b> &mdash; extracellular volume</figcaption>
+        </figure>
+      </div>
+      <figcaption>The same short-axis cross-section of one heart, mapped five different ways. The
+        myocardium is the ring shape left of center in each frame. It is purple in the relaxation maps
+        and ECV at these contrast and brightness settings, and light gray in LGE. Each frame carries
+        its own color bar. Click any image to enlarge.</figcaption>
+    </div>
+
+    <h3>Reference values for healthy tissue</h3>
+
+    <p>Fibrotic tissue appears as increased relaxation-time values. At a field strength of 1.5&nbsp;T,
+      there are fixed values that represent healthy myocardial tissue.</p>
+
+    <dl class="specs">
+      <div><dt><span class="keep-case">T1&#961;</span></dt><dd>54.2 &plusmn; 2.56&nbsp;ms <span class="muted">(presented at ISMRM, May 2026)</span></dd></div>
+      <div><dt>T2</dt><dd>52.18 &plusmn; 3.4&nbsp;ms</dd></div>
+      <div><dt>ECV</dt><dd>20.4% to 30.4%</dd></div>
+    </dl>
+
+    <p>A value above the healthy range is an <em>elevation</em>. An elevation is not specific to
+      myocardial fibrosis, since many conditions raise these values.</p>
+
+    <h2>Left ventricular segmentation</h2>
+
+    <p>Comparing maps quantitatively requires comparing the same piece of muscle in each of them. The
+      American Heart Association (AHA) describes a standard nomenclature for left ventricular (LV)
+      segmentation. The LV is sliced parallel to the short axis into three layers: basal, mid-cavity
+      and apical. Each layer is then divided into smaller segments. The AHA model uses 17 segments.
+      This study excluded the apex (segment 17), which yields 16 segments.</p>
+
+    <div class="grid grid-2 bleed">
+      <figure class="pad">
+        <a href="/assets/img/seg-bullseye.png"><img src="/assets/img/seg-bullseye.png" alt="Bull's-eye plot showing the 16 numbered segments of the left ventricle in three concentric rings, with a legend naming each segment." loading="lazy"></a>
+        <figcaption>The 16 segments of the left ventricle. The basal and mid parts are split into six
+          subparts each, the apical part into four.</figcaption>
+      </figure>
+      <figure class="pad">
+        <a href="/assets/img/seg-heart.png"><img src="/assets/img/seg-heart.png" alt="Diagram of a short-axis cross-section of the heart labeling the right ventricle, left ventricle, myocardium and septum." loading="lazy"></a>
+        <figcaption>Short-axis cross-section of the heart. The septum divides the right and left
+          ventricles. The myocardium is the wall being measured.</figcaption>
+      </figure>
+    </div>
+
+    <h2>Method</h2>
+
+    <p>Pre-reconstructed <em>in vivo</em> CMRs of 41 patients were used. The MRIs were performed on a
+      1.5&nbsp;T Siemens scanner. The data set included the maps ECV, T2 and T1&#961;.</p>
+
+    <dl class="specs">
+      <div><dt>Field strength</dt><dd>1.5&nbsp;T Siemens</dd></div>
+      <div><dt>Field of view</dt><dd>360&ndash;500&nbsp;mm</dd></div>
+      <div><dt>In-plane resolution</dt><dd>1.40&ndash;1.95&nbsp;mm</dd></div>
+      <div><dt><span class="keep-case">T1&#961;</span> spin lock</dt><dd>500&nbsp;Hz, in 10&nbsp;ms steps to a total of 40&nbsp;ms</dd></div>
+      <div><dt>Analysis software</dt><dd><a href="https://medviso.com/segment/">Segment Research</a> by Medviso</dd></div>
+    </dl>
+
+    <h3>Data acquisition through segmentation</h3>
+
+    <p>Semi-automated 16-part segmentation was performed with the built-in bullseye plot tool in
+      Segment Research. A perpendicular line through the center of the septum was marked as a
+      reference for the software. The epicardial border was then eroded inward by 10% and the
+      endocardial border outward by 10%, to exclude blood pools.</p>
+
+    <p>The software calculated a mean value per segment. These means were gathered as tuples of ECV,
+      T1&#961; and T2 values in a Python dictionary, mapped to a specific heart segment in each
+      patient. Three scatter plots were then created, comparing two maps at a time. The correlation
+      coefficient <em>r</em> was obtained using <span class="mono">pearsonr</span>. Data point pairs
+      were filtered out if one of the elements came from an empty cell, and therefore became a
+      <span class="mono">NaN</span>.</p>
+
+    <p>A list of 16 patients, out of the 41, had elevations in the LGE map and were classed as
+      LGE-positive (LGE+). This acted as a second filter. The list was used after segmentation, to
+      avoid observation bias.</p>
+
+    <h3>Data acquisition through regions of interest</h3>
+
+    <p>Regions of interest (ROIs) were a second way to assess the effectiveness of T1&#961;. LGE ROIs
+      were marked where suspected collagen highlights were present, across 70 unselected patients.
+      These 70 patients were not the same as the 16 LGE-positive patients above, although they were
+      also LGE-positive. They had elevations in LGE values, but no clear diagnosis of myocardial
+      fibrosis had been established.</p>
+
+    <p>Each LGE ROI was compared to a separate marked region of remote healthy tissue of equal size.
+      The masks were then overlaid onto the T1&#961; map of the corresponding slice. Each T1&#961;
+      ROI whose mean exceeded the mean of the remote healthy tissue by at least four standard
+      deviations was counted as an elevation detection.</p>
+
+    <h2>Results</h2>
+
+    <p>Across the 70 LGE-positive patients, T1&#961; detected <b>85%</b> of the elevations that
+      LGE identified.</p>
+
+    <p>The segment-wise correlations were weaker. The results for all 41 patients are shown below.</p>
+
+    <div class="table-scroll">
+      <table>
+        <caption class="visually-hidden">Correlation coefficients based on all 41 patients</caption>
+        <thead>
+          <tr><th scope="col">Comparison</th><th scope="col" class="num">r</th><th scope="col" class="num">n</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">ECV vs.&nbsp;T1&#961;</th><td class="num">0.194</td><td class="num">656</td></tr>
+          <tr><th scope="row">T2 vs.&nbsp;T1&#961;</th><td class="num">0.480</td><td class="num">608</td></tr>
+          <tr><th scope="row">ECV vs.&nbsp;T2</th><td class="num">0.340</td><td class="num">608</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <figcaption><b>Table 1.</b> Segment-wise mean values, all 41 patients. <em>r</em> is the Pearson
+      correlation coefficient, <em>n</em> the number of paired data points in the scatter
+      plot.</figcaption>
+
+    <p>The results for the 16 LGE-positive patients are shown below.</p>
+
+    <div class="table-scroll">
+      <table>
+        <caption class="visually-hidden">Correlation coefficients based on the 16 LGE-positive patients</caption>
+        <thead>
+          <tr><th scope="col">Comparison</th><th scope="col" class="num">r</th><th scope="col" class="num">n</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">ECV vs.&nbsp;T1&#961;</th><td class="num">0.047</td><td class="num">240</td></tr>
+          <tr><th scope="row">T2 vs.&nbsp;T1&#961;</th><td class="num">0.478</td><td class="num">240</td></tr>
+          <tr><th scope="row">ECV vs.&nbsp;T2</th><td class="num">0.322</td><td class="num">240</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <figcaption><b>Table 2.</b> The same comparisons for LGE-positive patients only.</figcaption>
+
+    <p>All six coefficients fall within &minus;0.5 &lt; <em>r</em> &lt; 0.5.</p>
+
+    <div class="bleed">
+      <div class="grid grid-3">
+        <figure>
+          <a href="/assets/img/seg-scatter-ecv-t1rho-all.png"><img src="/assets/img/seg-scatter-ecv-t1rho-all.png" alt="Scatter plot of ECV against T1-rho for all patients, showing a dense cluster with scattered high outliers." loading="lazy"></a>
+          <figcaption><b>ECV vs. T1&#961;</b>, all patients. r = 0.194, n = 656.</figcaption>
+        </figure>
+        <figure>
+          <a href="/assets/img/seg-scatter-t2-t1rho-all.png"><img src="/assets/img/seg-scatter-t2-t1rho-all.png" alt="Scatter plot of T2 against T1-rho for all patients, showing a visible upward trend." loading="lazy"></a>
+          <figcaption><b>T2 vs. T1&#961;</b>, all patients. r = 0.480, n = 608.</figcaption>
+        </figure>
+        <figure>
+          <a href="/assets/img/seg-scatter-ecv-t2-all.png"><img src="/assets/img/seg-scatter-ecv-t2-all.png" alt="Scatter plot of ECV against T2 for all patients." loading="lazy"></a>
+          <figcaption><b>ECV vs. T2</b>, all patients. r = 0.340, n = 608.</figcaption>
+        </figure>
+        <figure>
+          <a href="/assets/img/seg-scatter-ecv-t1rho-lge.png"><img src="/assets/img/seg-scatter-ecv-t1rho-lge.png" alt="Scatter plot of ECV against T1-rho for LGE-positive patients, showing almost no trend." loading="lazy"></a>
+          <figcaption><b>ECV vs. T1&#961;</b>, LGE+ only. r = 0.047, n = 240.</figcaption>
+        </figure>
+        <figure>
+          <a href="/assets/img/seg-scatter-t2-t1rho-lge.png"><img src="/assets/img/seg-scatter-t2-t1rho-lge.png" alt="Scatter plot of T2 against T1-rho for LGE-positive patients." loading="lazy"></a>
+          <figcaption><b>T2 vs. T1&#961;</b>, LGE+ only. r = 0.478, n = 240.</figcaption>
+        </figure>
+        <figure>
+          <a href="/assets/img/seg-scatter-ecv-t2-lge.png"><img src="/assets/img/seg-scatter-ecv-t2-lge.png" alt="Scatter plot of ECV against T2 for LGE-positive patients." loading="lazy"></a>
+          <figcaption><b>ECV vs. T2</b>, LGE+ only. r = 0.322, n = 240.</figcaption>
+        </figure>
+      </div>
+      <figcaption>Each data point has the coordinates of two map values for the same heart segment, in
+        the same slice. Click to enlarge.</figcaption>
+    </div>
+
+    <h2>Discussion</h2>
+
+    <p>The two analyses point in different directions. The ROI analysis showed that T1&#961;
+      identified most of the elevations detected by LGE. The segment-wise correlations showed that
+      ECV, T1&#961; and T2 do not measure elevation identically.</p>
+
+    <p>LGE is a valid method for diagnosing myocardial fibrosis. The fact that T1&#961; detected
+      85% of the elevations that LGE identified indicates that T1&#961; is nearly as accurate as
+      LGE in detecting elevations. However, this sensitivity alone does not establish diagnostic
+      accuracy, since the patients in the data set were unselected.</p>
+
+    <p>The strongest correlation in the data set was between T2 and T1&#961;: 0.480 across all
+      patients, and 0.478 among LGE-positive patients. This is consistent with what the two maps
+      measure. Both are closely related transverse-relaxation measurements, but the spin-lock RF pulse
+      makes T1&#961; more sensitive to water&ndash;macromolecule interactions. T1&#961; is therefore
+      more similar to T2 than to ECV in what it detects.</p>
+
+    <p>Since an elevation does not always equal fibrosis, it is unclear whether using T1&#961; over T2
+      has an advantage in diagnosing myocardial fibrosis.</p>
+
+    <p>The correlation between ECV and T1&#961; was the weakest of the six, and it weakened further
+      when only LGE-positive patients were analyzed: 0.194 dropped to 0.047. This may be because fewer
+      healthy patients remained in the scatter plot, and healthy values cluster within a narrow
+      interval. The LGE-negative patients created a more centralized area in the plot. Filtering them
+      out led to fewer data points and more widespread values.</p>
+
+    <h3>Two possible explanations for the weak correlations</h3>
+
+    <p>The first is that these maps contain different measurements, so they should not be expected to
+      correlate linearly, as the Pearson coefficient <em>r</em> assumes. ECV measures extracellular
+      volume, T2 varies with water content, and T1&#961; captures microscopic changes in tissue
+      structure.</p>
+
+    <p>The second is that outliers in the scatter plots created a weak correlation. These outliers
+      could have been caused by blood pools surrounding and within the myocardium, which yielded
+      values approaching 150&nbsp;ms for T1&#961;. Since bullseye plots compute the mean for a
+      segment, the blood pools may have been included.</p>
+
+    <h2>Limitations</h2>
+
+    <p>The 16-part segmentation was performed semi-automatically. The center of the septum was marked
+      once for multiple slices. If each slice was slightly rotated, for example from movement of the
+      scanned patient, the software may have performed the segmentation incorrectly. This leads to the
+      wrong segment of the heart being displayed as another in the bullseye plot data. A segment
+      containing myocardial fibrosis might then appear healthy, which would invalidate the accuracy of
+      T1&#961; in detecting elevations.</p>
+
+    <p>Additionally, the position of the mark could not be transferred between image stacks, so the
+      segmentation between stacks may have been shifted. This could not be standardized.</p>
+
+    <p>Blood pools might also have been included in the manual isolation of the left ventricle. This
+      potentially contributed to inflated values in T2, T1&#961; and ECV, creating outliers. In the
+      data set, the apical slices typically had high values because of blood pools.</p>
+
+    <h2>Comparison with past studies</h2>
+
+    <p>Bustin et al. (2021) also used ECG-triggered, bSSFP breath-held MRIs, and also compared
+      T1&#961; maps to LGE maps. Their patients were selected: 23 patients with suspected myocardial
+      fibrosis, 15 of them LGE-positive. They used LGE as the reference for T1&#961; remote and
+      injured ROIs, and reported 93% sensitivity. The 85% found here, from a larger and
+      unselected group, supports their result.</p>
+
+    <p>Van Oorschot et al. calculated <em>r</em> between ECV and T1&#961; based on marked ROIs, and
+      obtained 0.66. This is a stronger correlation than the 0.047 to 0.194 found here for the same
+      pair. The difference is methodological: they compared ROIs, whereas this study compared segment
+      means. Mean values from segmentation can therefore yield weaker correlations, since averaging a
+      whole segment dilutes a focal lesion into the surrounding healthy tissue.</p>
+
+    <h2>Future research</h2>
+
+    <ul>
+      <li>Shift the epicardial and endocardial borders further, for example by 15% or 20%,
+        while keeping the currently marked myocardium data. If the outliers disappear, the borders
+        were drawn too far outside the true myocardium and included too much blood.</li>
+      <li>Ignore the apical slices for each image stack, since they contained the most blood. Scar
+        tissue may be present in those slices, which would reduce the data set.</li>
+      <li>Mark ROIs in each map rather than computing mean values per segment. A factor of increase
+        could be calculated by dividing the mean ROI value by the remote healthy tissue mean value.
+        This would establish how clearly the fibrotic tissue is visible between maps. Marking ROIs
+        can, however, introduce observer bias.</li>
+      <li>Include the T1 relaxation map in the comparison, for a more definitive picture of how
+        T1&#961; compares with established methods.</li>
+      <li>Take possible sex-related variations in T1&#961; values into account, as C. Han et al. did.
+        Patient sex could be extracted from the MRI metadata.</li>
+      <li>Perform a specificity analysis, which would require a list of selected patients with
+        diagnosed myocardial fibrosis alongside unselected patients. Without it, this study measures
+        elevation detection rather than diagnosis.</li>
+      <li>Use a larger sample size. The scatter plots did not all have the same number of points.</li>
+    </ul>
+
+    <h2>Conclusion</h2>
+
+    <p>The maps T2, T1&#961; and ECV did not always detect the same elevations, as shown by the weak
+      correlations: all coefficients fell within &minus;0.5 &lt; <em>r</em> &lt; 0.5. T1&#961; appears
+      promising, since it detected 85% of the elevations LGE found across 70 LGE-positive
+      patients. It still needs more statistical evidence before it can act as an alternative to
+      contrast agents in clinical settings, because it correlates more weakly with ECV than with T2,
+      both for LGE-positive patients and for all patients.</p>
+
+    <p>The weak correlations could stem from systematic errors in the myocardial segmentation, and
+      from outliers caused by blood being included in the segmentation. A stronger version of this
+      study would use more patients, tighter segmentation borders, and ROIs instead of segment
+      means.</p>
+
+    <h2>Resources</h2>
+
+    <ul class="resources">
+      <li><span class="kind">PDF</span><a href="/files/cardiac-t1rho-segmentation-report.pdf">Full report: <em>Quantitative Cardiac T1&#961; MRI: Segmentation and Multi-modal Comparison</em></a> &mdash; 20 pages, with all figures and references</li>
+      <li><span class="kind">Software</span><a href="https://medviso.com/segment/">Segment Research</a> by Medviso, used for segmentation and bullseye analysis</li>
+      <li><span class="kind">Program</span><a href="https://raysforexcellence.se/">Rays &ndash; Research Academy for Young Scientists</a></li>
+    </ul>
+
+    <div class="note">
+      <p class="note__title">AI use and acknowledgements</p>
+      <p>AI never had access to any of the patient images, or to the spreadsheets based on extracted
+        patient data. Claude Opus 4.8 was used to generate the Python code that read the Excel file
+        and extracted the map values into a dictionary, to debug the scatter-plot code, to rewrite
+        repeated plotting blocks into one reusable function, and to generate the LaTeX code for the
+        five-panel figure. The full disclosure is in the report.</p>
+      <p>Thanks to my supervisor Pontus Pandurevic for guidance well beyond the standard mentorship
+        weeks; to Albert Meurling Wipf and Kasper Johansson for detailed feedback on the report; to my
+        teachers Katarina Roxstr&ouml;m Lindquist and Niklas Schild; to the Rays organisers; and to
+        Beijerstiftelsen, Jacob Wallenbergs Stiftelse and Hierta-Retzius Stipendiefond, who support
+        the program.</p>
+    </div>
+
+    <nav class="post-nav bleed" aria-label="More posts">
+      <a href="/posts/tilted-filters.html">
+        <span class="eyebrow">Older post</span>
+        <strong>Detecting a tilted narrowband filter from three photos of an LED</strong>
+      </a>
+      <a href="/posts/milky-way-rhodes.html">
+        <span class="eyebrow">Older still</span>
+        <strong>Photographing the Milky Way from Rhodes with a non-astro-modified camera</strong>
+      </a>
+    </nav>
+
+  </div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <span>&copy; 2026 Ana Kostic</span>
+    <nav aria-label="Footer">
+      <a href="/">Blog</a>
+      <a href="/about.html">About</a>
+      <a href="https://github.com/delphinusdelphis">GitHub</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

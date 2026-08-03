@@ -1,0 +1,417 @@
+/* ==========================================================================
+   themes.css — every visual style of the site lives in this one file.
+
+   HOW TO SWITCH STYLE
+     Visitors: use the "Style" menu in the site header.
+     You (site-wide default): open assets/js/theme.js and change the single
+       line   const DEFAULT_THEME = '...';
+     Quick preview: add ?theme=terminal to any URL.
+
+   HOW TO ADD A NEW STYLE
+     1. Copy any [data-theme="..."] block below and rename it.
+     2. Change the variable values. Nothing else in the site needs touching —
+        base.css only ever reads these variables.
+     3. Add one line to the THEMES array in assets/js/theme.js so it shows up
+        in the header menu.
+
+   Every theme must define every variable in the list below, otherwise it
+   falls back to whatever "academic" set.
+   ========================================================================== */
+
+/* --- shared font stacks (system fonts only, nothing to download) ---------- */
+:root {
+  --stack-serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua",
+                 Georgia, "Times New Roman", serif;
+  --stack-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+                Arial, sans-serif;
+  --stack-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+                "DejaVu Sans Mono", "Liberation Mono", monospace;
+  --stack-display: "Arial Black", "Helvetica Neue", Helvetica, Impact, sans-serif;
+}
+
+/* ==========================================================================
+   1. ACADEMIC — the default. Dark slate navbar, a strong blue hero band,
+      white body, bold blue links, justified text.
+   ========================================================================== */
+:root,
+[data-theme="academic"] {
+  color-scheme: light;
+
+  /* navigation bar and footer */
+  --nav-bg:          #2b3440;
+  --nav-bg-soft:     #3a4553;
+  --nav-fg:          #dfe5ec;
+  --nav-fg-dim:      #a9b4c2;
+  --nav-fg-strong:   #ffffff;
+  --nav-border:      #1d242d;
+  --nav-border-strong: #55606f;
+  --accent-on-nav:   #6fa8ff;
+
+  /* hero band */
+  --hero-bg:         #0d63e0;
+  --hero-bg-soft:    rgba(255, 255, 255, .07);
+  --hero-fg:         #ffffff;
+  --hero-fg-dim:     #d5e3ff;
+  --hero-rule:       rgba(255, 255, 255, .35);
+  --hero-tag-bg:     rgba(255, 255, 255, .18);
+  --hero-border:     transparent;
+
+  /* page */
+  --bg:              #ffffff;
+  --bg-soft:         #f4f7fb;
+  --bg-inset:        #ffffff;
+  --fg:              #14181d;
+  --fg-soft:         #444c56;
+  --fg-faint:        #767f8a;
+  --accent:          #0b57c4;
+  --accent-soft:     #e7f0fd;
+  --on-accent:       #ffffff;
+  --border:          #d9e0e8;
+  --rule:            #e3e9f0;
+  --code-bg:         #f4f7fb;
+  --code-fg:         #23425f;
+  --figure-bg:       #f4f7fb;
+  --shadow:          0 2px 4px rgba(16, 26, 36, .06), 0 10px 26px rgba(16, 26, 36, .07);
+
+  /* type */
+  --font-body:       var(--stack-sans);
+  --font-head:       var(--stack-sans);
+  --font-ui:         var(--stack-sans);
+  --font-mono:       var(--stack-mono);
+  --fs-root:         17px;
+  --lh:              1.62;
+  --measure:         40rem;
+  --measure-wide:    62rem;
+
+  --h-weight:        700;
+  --h-tracking:      -0.018em;
+  --h-transform:     none;
+  --h-lh:            1.18;
+  --h3-style:        italic;
+  --title-size:      clamp(1.9rem, 1.25rem + 2.4vw, 2.9rem);
+  --site-title-transform: none;
+  --site-title-weight: 700;
+  --site-title-tracking: -0.01em;
+
+  --eyebrow-transform: uppercase;
+  --eyebrow-tracking:  0.1em;
+  --eyebrow-size:      0.68rem;
+
+  --text-align:      justify;
+  --hyphens:         auto;
+  --link-weight:     600;
+
+  /* shape */
+  --radius:          5px;
+  --radius-lg:       8px;
+  --border-w:        1px;
+  --rule-weight:     1px;
+  --link-thickness:  1px;
+  --link-offset:     0.16em;
+  --hr-style:        solid;
+  --card-lift:       -2px;
+}
+
+/* ==========================================================================
+   2. PAPER — warm editorial light theme. Serif body, quiet rust accent.
+   ========================================================================== */
+[data-theme="paper"] {
+  color-scheme: light;
+
+  --nav-bg:          #2b2620;
+  --nav-bg-soft:     #3c352c;
+  --nav-fg:          #f0e9dd;
+  --nav-fg-dim:      #bcb1a0;
+  --nav-fg-strong:   #ffffff;
+  --nav-border:      #1c1813;
+  --nav-border-strong: #5a5045;
+  --accent-on-nav:   #e0864f;
+
+  --hero-bg:         #9c3d10;
+  --hero-bg-soft:    rgba(255, 255, 255, .08);
+  --hero-fg:         #fff6ee;
+  --hero-fg-dim:     #f2d6c2;
+  --hero-rule:       rgba(255, 255, 255, .32);
+  --hero-tag-bg:     rgba(255, 255, 255, .17);
+  --hero-border:     transparent;
+
+  --bg:              #fbf9f4;
+  --bg-soft:         #f3efe6;
+  --bg-inset:        #ffffff;
+  --fg:              #221f1b;
+  --fg-soft:         #58524a;
+  --fg-faint:        #8d867b;
+  --accent:          #9c3d10;
+  --accent-soft:     #f0e2d6;
+  --on-accent:       #fffaf5;
+  --border:          #ddd5c7;
+  --rule:            #cfc6b4;
+  --code-bg:         #f3efe6;
+  --code-fg:         #4a3f31;
+  --figure-bg:       #f3efe6;
+  --shadow:          0 2px 4px rgba(60, 45, 25, .06), 0 10px 26px rgba(60, 45, 25, .06);
+
+  --font-body:       var(--stack-serif);
+  --font-head:       var(--stack-serif);
+  --font-ui:         var(--stack-sans);
+  --font-mono:       var(--stack-mono);
+  --fs-root:         19px;
+  --lh:              1.68;
+  --measure:         36rem;
+  --measure-wide:    58rem;
+
+  --h-weight:        600;
+  --h-tracking:      -0.011em;
+  --h-transform:     none;
+  --h-lh:            1.18;
+  --h3-style:        normal;
+  --title-size:      clamp(2rem, 1.3rem + 2.6vw, 3.1rem);
+  --site-title-transform: none;
+  --site-title-weight: 600;
+  --site-title-tracking: -0.02em;
+
+  --eyebrow-transform: uppercase;
+  --eyebrow-tracking:  0.11em;
+  --eyebrow-size:      0.7rem;
+
+  --text-align:      left;
+  --hyphens:         manual;
+  --link-weight:     inherit;
+
+  --radius:          4px;
+  --radius-lg:       8px;
+  --border-w:        1px;
+  --rule-weight:     1px;
+  --link-thickness:  1px;
+  --link-offset:     0.18em;
+  --hr-style:        solid;
+  --card-lift:       -2px;
+}
+
+/* ==========================================================================
+   3. OBSERVATORY — deep-sky dark theme. Made for the astrophotography posts.
+   ========================================================================== */
+[data-theme="observatory"] {
+  color-scheme: dark;
+
+  --nav-bg:          #050912;
+  --nav-bg-soft:     #101a2e;
+  --nav-fg:          #dce4f4;
+  --nav-fg-dim:      #8d9cba;
+  --nav-fg-strong:   #ffffff;
+  --nav-border:      #16203a;
+  --nav-border-strong: #2a3855;
+  --accent-on-nav:   #6fd3ff;
+
+  --hero-bg:         #10203c;
+  --hero-bg-soft:    rgba(255, 255, 255, .05);
+  --hero-fg:         #eaf1ff;
+  --hero-fg-dim:     #9fb3d6;
+  --hero-rule:       rgba(140, 190, 255, .3);
+  --hero-tag-bg:     rgba(111, 211, 255, .18);
+  --hero-border:     #1d3055;
+
+  --bg:              #080d1a;
+  --bg-soft:         #0f172b;
+  --bg-inset:        #0d1526;
+  --fg:              #e3e9f7;
+  --fg-soft:         #a7b3ce;
+  --fg-faint:        #6c7a99;
+  --accent:          #6fd3ff;
+  --accent-soft:     #16263f;
+  --on-accent:       #04101f;
+  --border:          #21304d;
+  --rule:            #1b2740;
+  --code-bg:         #0d1526;
+  --code-fg:         #b7c8e8;
+  --figure-bg:       #0d1526;
+  --shadow:          0 2px 6px rgba(0, 0, 0, .5), 0 14px 40px rgba(0, 0, 0, .45);
+
+  --font-body:       var(--stack-sans);
+  --font-head:       var(--stack-serif);
+  --font-ui:         var(--stack-sans);
+  --font-mono:       var(--stack-mono);
+  --fs-root:         18px;
+  --lh:              1.7;
+  --measure:         37rem;
+  --measure-wide:    60rem;
+
+  --h-weight:        600;
+  --h-tracking:      -0.015em;
+  --h-transform:     none;
+  --h-lh:            1.16;
+  --h3-style:        italic;
+  --title-size:      clamp(2rem, 1.3rem + 2.6vw, 3.1rem);
+  --site-title-transform: none;
+  --site-title-weight: 600;
+  --site-title-tracking: 0.01em;
+
+  --eyebrow-transform: uppercase;
+  --eyebrow-tracking:  0.15em;
+  --eyebrow-size:      0.68rem;
+
+  --text-align:      left;
+  --hyphens:         manual;
+  --link-weight:     inherit;
+
+  --radius:          6px;
+  --radius-lg:       12px;
+  --border-w:        1px;
+  --rule-weight:     1px;
+  --link-thickness:  1px;
+  --link-offset:     0.2em;
+  --hr-style:        solid;
+  --card-lift:       -3px;
+}
+
+/* ==========================================================================
+   4. TERMINAL — monospace everything, dark, sharp corners, green phosphor.
+   ========================================================================== */
+[data-theme="terminal"] {
+  color-scheme: dark;
+
+  --nav-bg:          #060806;
+  --nav-bg-soft:     #101710;
+  --nav-fg:          #cfe8c8;
+  --nav-fg-dim:      #7fa478;
+  --nav-fg-strong:   #ffffff;
+  --nav-border:      #1c281a;
+  --nav-border-strong: #2c3d28;
+  --accent-on-nav:   #5cff9d;
+
+  --hero-bg:         #0f1710;
+  --hero-bg-soft:    rgba(92, 255, 157, .07);
+  --hero-fg:         #d8f5d0;
+  --hero-fg-dim:     #8fb388;
+  --hero-rule:       #2c3d28;
+  --hero-tag-bg:     rgba(92, 255, 157, .15);
+  --hero-border:     #26361f;
+
+  --bg:              #0a0d0a;
+  --bg-soft:         #11160f;
+  --bg-inset:        #0e120d;
+  --fg:              #cfe8c8;
+  --fg-soft:         #8fb388;
+  --fg-faint:        #5f7a5b;
+  --accent:          #5cff9d;
+  --accent-soft:     #14251a;
+  --on-accent:       #04170c;
+  --border:          #26361f;
+  --rule:            #1f2c1a;
+  --code-bg:         #0f1710;
+  --code-fg:         #a8e39b;
+  --figure-bg:       #0f1710;
+  --shadow:          none;
+
+  --font-body:       var(--stack-mono);
+  --font-head:       var(--stack-mono);
+  --font-ui:         var(--stack-mono);
+  --font-mono:       var(--stack-mono);
+  --fs-root:         16px;
+  --lh:              1.65;
+  --measure:         40rem;
+  --measure-wide:    62rem;
+
+  --h-weight:        700;
+  --h-tracking:      0.01em;
+  --h-transform:     uppercase;
+  --h-lh:            1.25;
+  --h3-style:        normal;
+  --title-size:      clamp(1.5rem, 1.05rem + 1.7vw, 2.15rem);
+  --site-title-transform: uppercase;
+  --site-title-weight: 700;
+  --site-title-tracking: 0.06em;
+
+  --eyebrow-transform: uppercase;
+  --eyebrow-tracking:  0.12em;
+  --eyebrow-size:      0.72rem;
+
+  --text-align:      left;
+  --hyphens:         manual;
+  --link-weight:     inherit;
+
+  --radius:          0px;
+  --radius-lg:       0px;
+  --border-w:        1px;
+  --rule-weight:     1px;
+  --link-thickness:  1px;
+  --link-offset:     0.22em;
+  --hr-style:        dashed;
+  --card-lift:       0px;
+}
+
+/* ==========================================================================
+   5. ZINE — brutalist print look. Thick borders, heavy display type, magenta.
+   ========================================================================== */
+[data-theme="zine"] {
+  color-scheme: light;
+
+  --nav-bg:          #12100c;
+  --nav-bg-soft:     #2a251c;
+  --nav-fg:          #f7f4ea;
+  --nav-fg-dim:      #b8b2a3;
+  --nav-fg-strong:   #ffffff;
+  --nav-border:      #12100c;
+  --nav-border-strong: #4d463a;
+  --accent-on-nav:   #ff4fa3;
+
+  --hero-bg:         #d3006b;
+  --hero-bg-soft:    rgba(255, 255, 255, .12);
+  --hero-fg:         #fffdf6;
+  --hero-fg-dim:     #ffd9ec;
+  --hero-rule:       #12100c;
+  --hero-tag-bg:     rgba(255, 255, 255, .22);
+  --hero-border:     #12100c;
+
+  --bg:              #f2efe4;
+  --bg-soft:         #e6e1d1;
+  --bg-inset:        #fffdf6;
+  --fg:              #12100c;
+  --fg-soft:         #3d3830;
+  --fg-faint:        #6d675b;
+  --accent:          #d3006b;
+  --accent-soft:     #ffdff0;
+  --on-accent:       #fffdf6;
+  --border:          #12100c;
+  --rule:            #12100c;
+  --code-bg:         #e6e1d1;
+  --code-fg:         #2a251c;
+  --figure-bg:       #e6e1d1;
+  --shadow:          5px 5px 0 var(--fg);
+
+  --font-body:       var(--stack-sans);
+  --font-head:       var(--stack-display);
+  --font-ui:         var(--stack-sans);
+  --font-mono:       var(--stack-mono);
+  --fs-root:         18px;
+  --lh:              1.58;
+  --measure:         37rem;
+  --measure-wide:    58rem;
+
+  --h-weight:        900;
+  --h-tracking:      -0.035em;
+  --h-transform:     uppercase;
+  --h-lh:            0.98;
+  --h3-style:        normal;
+  --title-size:      clamp(2.1rem, 1.2rem + 3.8vw, 3.8rem);
+  --site-title-transform: uppercase;
+  --site-title-weight: 900;
+  --site-title-tracking: -0.04em;
+
+  --eyebrow-transform: uppercase;
+  --eyebrow-tracking:  0.08em;
+  --eyebrow-size:      0.72rem;
+
+  --text-align:      left;
+  --hyphens:         manual;
+  --link-weight:     700;
+
+  --radius:          0px;
+  --radius-lg:       0px;
+  --border-w:        2px;
+  --rule-weight:     3px;
+  --link-thickness:  2px;
+  --link-offset:     0.14em;
+  --hr-style:        solid;
+  --card-lift:       -4px;
+}

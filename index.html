@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ana Kostic — physics, imaging and the night sky</title>
+<meta name="description" content="Ana Kostic writes about cardiac MRI research, narrowband filter optics and deep-sky astrophotography.">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://anakostic.com/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ana Kostic — physics, imaging and the night sky">
+<meta property="og:description" content="Cardiac MRI research, narrowband filter optics and deep-sky astrophotography.">
+<meta property="og:image" content="https://anakostic.com/assets/img/mw-final.jpg">
+<meta property="og:url" content="https://anakostic.com/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="/assets/css/themes.css?v=6">
+<link rel="stylesheet" href="/assets/css/base.css?v=6">
+<script src="/assets/js/theme.js?v=6"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- ============ header (same markup on every page) ============ -->
+<header class="site-header">
+  <div class="wrap site-header__inner">
+    <p class="site-title"><a href="/">Ana Kostic<small>Physics, imaging &amp; the night sky</small></a></p>
+    <nav class="site-nav" aria-label="Main">
+      <a href="/" aria-current="page">Blog</a>
+      <a href="/about.html">About</a>
+      <a href="https://github.com/delphinusdelphis">GitHub</a>
+    </nav>
+    <div class="switcher" data-switcher></div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ============ hero band ============ -->
+  <div class="banner banner--home">
+    <div class="wrap banner__inner">
+      <h1>Physics, imaging and the night sky</h1>
+      <p class="lede">Cardiac MRI relaxation times, narrowband filter alignment, and
+        astrophotography.</p>
+
+      <!-- Swap the image below for a portrait if you would rather have one. -->
+      <div class="intro-card">
+        <figure class="intro-card__media">
+          <img src="/assets/img/mw-final.jpg" alt="The core of the Milky Way photographed from Rhodes." loading="eager">
+        </figure>
+        <div class="intro-card__body">
+          <p>I study natural sciences at a high school in Sweden. I am passionate about physics,
+            and this site collects the projects I have worked on.</p>
+          <h2>Recently</h2>
+          <ul>
+            <li><a href="/posts/cardiac-t1rho-mri.html"><b>Cardiac MRI at Karolinska
+              Institutet</b></a>, through Rays &ndash; Research Academy for Young Scientists: can
+              T1&#961; act as an alternative to contrast agents?</li>
+            <li><a href="/posts/tilted-filters.html"><b>Tilted filters</b></a>, a Python script that
+              detects a tilted narrowband filter from three photos of an LED.</li>
+            <li><a href="/posts/milky-way-rhodes.html"><b>A talk at the Norra Astronomy and Space
+              Association</b></a> on photographing the Milky Way from Rhodes.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <section class="section">
+      <h2>Blog</h2>
+
+      <!-- ============ post list: one <li> per post ============ -->
+      <ul class="posts">
+
+        <li>
+          <article class="card">
+            <figure class="card__media">
+              <img src="/assets/img/seg-card.jpg" alt="A T1-rho relaxation-time map of a cardiac MRI slice, with the left ventricle showing as a bright yellow ring." loading="lazy">
+            </figure>
+            <div class="card__body">
+              <div class="card__meta">
+                <time class="dateline" datetime="2026-07-08">July 8, 2026</time>
+                <span class="tag">Research</span>
+                <span class="tag">MRI</span>
+              </div>
+              <h3><a href="/posts/cardiac-t1rho-mri.html">Can T1&#961; act as an alternative to contrast agents?</a></h3>
+              <p>Gadolinium-based contrast agents carry risks for patients with renal disease, so a
+                contrast-free method is needed. Cardiac MRI scans from 41 patients were segmented at
+                Karolinska Institutet, to compare the contrast-free map T1&#961; against the
+                contrast-based maps.</p>
+              <a class="card__more" href="/posts/cardiac-t1rho-mri.html">Read the write-up</a>
+            </div>
+          </article>
+        </li>
+
+        <li>
+          <article class="card">
+            <figure class="card__media">
+              <img src="/assets/img/tf-shift-some.jpg" alt="A hand holding a narrowband filter at an angle in front of a white LED, splitting the beam into red and yellow." loading="lazy">
+            </figure>
+            <div class="card__body">
+              <div class="card__meta">
+                <time class="dateline" datetime="2026-03-15">March 15, 2026</time>
+                <span class="tag">Optics</span>
+                <span class="tag">Python</span>
+              </div>
+              <h3><a href="/posts/tilted-filters.html">Detecting a tilted narrowband filter from three photos of an LED</a></h3>
+              <p>An interference filter that is not parallel to the sensor shifts its passband toward
+                shorter wavelengths, and the shift is uneven across the frame. A Python script
+                measures that asymmetry from three RAW frames.</p>
+              <a class="card__more" href="/posts/tilted-filters.html">Read the write-up</a>
+            </div>
+          </article>
+        </li>
+
+        <li>
+          <article class="card">
+            <figure class="card__media">
+              <img src="/assets/img/mw-setup.jpg" alt="A camera on a small equatorial tracker on a tripod at night, under a starry sky." loading="lazy">
+            </figure>
+            <div class="card__body">
+              <div class="card__meta">
+                <time class="dateline" datetime="2026-02-13">February 13, 2026</time>
+                <span class="tag">Astrophotography</span>
+              </div>
+              <h3><a href="/posts/milky-way-rhodes.html">Photographing the Milky Way from Rhodes with a non-astro-modified camera</a></h3>
+              <p>Forty minutes of total exposure on an unguided equatorial tracker, using a
+                non-astro-modified Canon EOS R8 and a CLS filter.</p>
+              <a class="card__more" href="/posts/milky-way-rhodes.html">Read the write-up</a>
+            </div>
+          </article>
+        </li>
+
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>Code</h2>
+      <ul class="resources">
+        <li><span class="kind">Repo</span><a href="https://github.com/delphinusdelphis/Tilted-filters">Tilted-filters</a> &mdash; detects a tilted narrowband filter from three RAW frames of an LED. Python, MIT licensed</li>
+        <li><span class="kind">Profile</span><a href="https://github.com/delphinusdelphis">github.com/delphinusdelphis</a></li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>Reports and posters</h2>
+      <ul class="resources">
+        <li><span class="kind">Jul 2026</span><a href="/files/cardiac-t1rho-segmentation-report.pdf">Quantitative Cardiac T1&#961; MRI: Segmentation and Multi-modal Comparison</a> &mdash; 20-page report from the project at Karolinska Institutet, through Rays (PDF)</li>
+        <li><span class="kind">Mar 2026</span><a href="/files/tilted-filters-poster.pdf">Tilted filters</a> &mdash; project poster, in Swedish (PDF)</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>Talks</h2>
+      <ul class="resources">
+        <li><span class="kind">Feb 2026</span><a href="/posts/milky-way-rhodes.html">Photographing the Milky Way from Rhodes</a> &mdash; Norra Astronomy and Space Association</li>
+      </ul>
+    </section>
+
+  </div>
+
+</main>
+
+<!-- ============ footer (same markup on every page) ============ -->
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <span>&copy; 2026 Ana Kostic</span>
+    <nav aria-label="Footer">
+      <a href="/">Blog</a>
+      <a href="/about.html">About</a>
+      <a href="https://github.com/delphinusdelphis">GitHub</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

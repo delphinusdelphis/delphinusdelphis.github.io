@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Detecting a tilted narrowband filter from three photos of an LED — Ana Kostic</title>
+<meta name="description" content="An interference filter that is not parallel to the sensor shifts its passband toward shorter wavelengths. A Python script measures that shift from three RAW frames of an LED.">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://anakostic.com/posts/tilted-filters.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Detecting a tilted narrowband filter from three photos of an LED">
+<meta property="og:description" content="A demonstration of passband shift, and a Python script that detects filter tilt from three RAW frames.">
+<meta property="og:image" content="https://anakostic.com/assets/img/tf-shift-some.jpg">
+<meta property="og:url" content="https://anakostic.com/posts/tilted-filters.html">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="/assets/css/themes.css?v=6">
+<link rel="stylesheet" href="/assets/css/base.css?v=6">
+<script src="/assets/js/theme.js?v=6"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap site-header__inner">
+    <p class="site-title"><a href="/">Ana Kostic<small>Physics, imaging &amp; the night sky</small></a></p>
+    <nav class="site-nav" aria-label="Main">
+      <a href="/">Blog</a>
+      <a href="/about.html">About</a>
+      <a href="https://github.com/delphinusdelphis">GitHub</a>
+    </nav>
+    <div class="switcher" data-switcher></div>
+  </div>
+</header>
+
+<main id="main">
+<article>
+
+  <div class="banner banner--post">
+    <div class="wrap banner__inner">
+      <div class="card__meta">
+        <time class="dateline" datetime="2026-03-15">March 15, 2026</time>
+        <span class="tag">Optics</span>
+        <span class="tag">Python</span>
+        <span class="tag">Astrophotography</span>
+      </div>
+      <h1>Tilted filters</h1>
+      <p class="lede">A narrowband filter that is not parallel to the sensor shifts its passband
+        toward shorter wavelengths, and the shift is uneven across the frame. This script detects
+        that from three photos of an LED.</p>
+    </div>
+  </div>
+
+  <div class="wrap prose post-body">
+
+    <p class="byline">Code: <a href="https://github.com/delphinusdelphis/Tilted-filters">github.com/delphinusdelphis/Tilted-filters</a>
+      &middot; MIT licensed</p>
+
+    <figure class="hero bleed">
+      <a href="/assets/img/tf-shift-some.jpg"><img src="/assets/img/tf-shift-some.jpg" alt="A hand holding a filter at an angle in front of a white LED on a protractor; the beam projected onto the paper is split into red and yellow." loading="lazy"></a>
+      <figcaption>A 6&nbsp;nm H&#945; filter held at an angle in front of a white LED, on a printed
+        protractor. The transmitted beam has shifted from red toward yellow.</figcaption>
+    </figure>
+
+    <h2>Why the angle matters</h2>
+
+    <p>A narrowband astronomy filter is an interference filter. It reflects the unwanted
+      wavelengths rather than absorbing them, using a stack of thin dielectric layers. The layers are
+      tuned so that light at one particular wavelength interferes constructively on its way through. A
+      6&nbsp;nm hydrogen alpha (H&#945;) filter passes a 6&nbsp;nm-wide window centered on
+      656.3&nbsp;nm and rejects the rest.</p>
+
+    <p>This tuning depends on the path length through the layer stack, which in turn depends on the
+      angle of incidence. When the filter is tilted, the effective path shortens and the passband
+      shifts toward shorter wavelengths. This is approximated by:</p>
+
+    <pre><code>&#955;(&#952;) &#8776; &#955;&#8320; &#183; &#8730;( 1 &#8722; (sin&#952; / n_eff)&#178; )</code></pre>
+
+    <p>where <span class="mono">&#952;</span> is the angle of incidence and
+      <span class="mono">n_eff</span> is the effective refractive index of the coating stack.
+      Setting <span class="mono">n_eff &#8776; 2</span> as an approximation gives the following shifts
+      for a 6&nbsp;nm H&#945; filter.</p>
+
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Tilt</th>
+            <th scope="col" class="num">Band center</th>
+            <th scope="col" class="num">Shift</th>
+            <th scope="col" class="num">As a fraction of a 6&nbsp;nm band</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">0&#176;</th><td class="num">656.3&nbsp;nm</td><td class="num">&mdash;</td><td class="num">&mdash;</td></tr>
+          <tr><th scope="row">2&#176;</th><td class="num">656.2&nbsp;nm</td><td class="num">&minus;0.1&nbsp;nm</td><td class="num">2%</td></tr>
+          <tr><th scope="row">5&#176;</th><td class="num">655.7&nbsp;nm</td><td class="num">&minus;0.6&nbsp;nm</td><td class="num">10%</td></tr>
+          <tr><th scope="row">10&#176;</th><td class="num">653.8&nbsp;nm</td><td class="num">&minus;2.5&nbsp;nm</td><td class="num">41%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <figcaption>These values are illustrative. <span class="mono">n_eff</span> is specific to each
+      filter's coating, so they show the scale of the effect rather than a specification.</figcaption>
+
+    <p>At 10&#176;, the window moves almost half its own width off the emission line being
+      photographed. When the filter is mounted at an angle, the angle of incidence is also not uniform
+      across the frame. Light reaching the left edge of the sensor arrives at a different angle than
+      light reaching the right edge. The passband is therefore shifted by different amounts across the
+      frame, which produces uneven brightness and a color gradient, and reduces the signal on one
+      side of every exposure.</p>
+
+    <p>A mounting error of two degrees is hard to judge by eye. The effect is there, and one side
+      of the frame does look slightly pinker than the other, but it is subtle enough that estimating
+      the angle from it is not practical.</p>
+
+    <h2>Demonstrating the shift</h2>
+
+    <p>The effect can be shown directly with a white LED, a printed protractor and the H&#945;
+      filter held at increasing angles.</p>
+
+    <div class="grid grid-3 bleed">
+      <figure>
+        <a href="/assets/img/tf-shift-none.jpg"><img src="/assets/img/tf-shift-none.jpg" alt="Filter held perpendicular to a white LED beam; the light projected on paper is pure red." loading="lazy"></a>
+        <figcaption><b>Square on.</b> The filter passes H&#945; and the projected beam is pure red.</figcaption>
+      </figure>
+      <figure>
+        <a href="/assets/img/tf-shift-some.jpg"><img src="/assets/img/tf-shift-some.jpg" alt="Filter held at a moderate angle; the projected beam shows red and yellow." loading="lazy"></a>
+        <figcaption><b>Tilted.</b> The passband has moved blueward far enough to let yellow through.</figcaption>
+      </figure>
+      <figure>
+        <a href="/assets/img/tf-shift-extreme.jpg"><img src="/assets/img/tf-shift-extreme.jpg" alt="Filter held at a steep angle; the projected beam is yellow-green." loading="lazy"></a>
+        <figcaption><b>Steeply tilted.</b> Yellow-green: the passband has moved far enough that it no
+          longer overlaps H&#945;.</figcaption>
+      </figure>
+    </div>
+
+    <p>These angles are large, at tens of degrees, and far greater than a mounting error would
+      produce. The same effect occurs at 2&#176;, where it is faint but not invisible: one side of
+      the frame comes out slightly pinker than the other. The script measures that difference rather
+      than relying on the eye to judge it.</p>
+
+    <h2>Method: three frames of one LED</h2>
+
+    <p>The filter is placed in front of the sensor and a small bright source is photographed in
+      three positions: in the center of the field of view, toward the left edge, and toward the
+      right edge. The exposure settings are kept the same for all three.</p>
+
+    <p>If the filter is parallel to the sensor, the left and right frames are symmetric. If it is
+      tilted about the vertical axis, they are not, since light reaches one side at a steeper angle
+      than the other and the passband there has shifted further.</p>
+
+    <div class="grid grid-2 bleed">
+      <figure>
+        <a href="/assets/img/tf-filter-on-sensor.jpg"><img src="/assets/img/tf-filter-on-sensor.jpg" alt="A Canon EOS R8 body with the lens removed, showing a small square filter placed over the sensor." loading="lazy"></a>
+        <figcaption>The rig: a 6&nbsp;nm H&#945; filter sitting in front of the sensor of a Canon EOS
+          R8 &mdash; deliberately not quite square, for the test.</figcaption>
+      </figure>
+      <figure>
+        <a href="/assets/img/tf-shot-center.jpg"><img src="/assets/img/tf-shot-center.jpg" alt="Hands holding the camera aimed at a red bike LED on a cardboard box, with the live view showing the LED centered." loading="lazy"></a>
+        <figcaption>Frame 2 of 3: a red bike light as the source, LED centered in the field of view.</figcaption>
+      </figure>
+      <figure>
+        <a href="/assets/img/tf-shot-left.jpg"><img src="/assets/img/tf-shot-left.jpg" alt="The same camera aimed so the red LED appears at the left edge of the live view." loading="lazy"></a>
+        <figcaption>LED toward the left edge.</figcaption>
+      </figure>
+      <figure>
+        <a href="/assets/img/tf-shot-right.jpg"><img src="/assets/img/tf-shot-right.jpg" alt="The same camera aimed so the red LED appears at the right edge of the live view." loading="lazy"></a>
+        <figcaption>LED toward the right edge. Three RAW files, one exposure setting.</figcaption>
+      </figure>
+    </div>
+
+    <p>In the RAW frames, the LED is a small dot against a mostly black background.</p>
+
+    <div class="grid grid-3 bleed">
+      <figure>
+        <a href="/assets/img/tf-frame-left.jpg"><img src="/assets/img/tf-frame-left.jpg" alt="A dark frame with a small pink LED dot near the left edge." loading="lazy"></a>
+        <figcaption>Left</figcaption>
+      </figure>
+      <figure>
+        <a href="/assets/img/tf-frame-center.jpg"><img src="/assets/img/tf-frame-center.jpg" alt="A dark frame with a small pink LED dot near the center." loading="lazy"></a>
+        <figcaption>Center</figcaption>
+      </figure>
+      <figure>
+        <a href="/assets/img/tf-frame-right.jpg"><img src="/assets/img/tf-frame-right.jpg" alt="A dark frame with a small pink LED dot near the right edge." loading="lazy"></a>
+        <figcaption>Right</figcaption>
+      </figure>
+    </div>
+
+    <p>Averaging over the whole frame would drown the signal in black pixels, so the source is
+      located first. The script identifies every pixel more than <b>four standard deviations</b> above
+      the channel mean as belonging to the light source, takes the bounding box of those pixels, and
+      recalculates the statistics inside that box.</p>
+
+    <div class="grid grid-3 bleed even" style="--fig-h: 17rem">
+      <figure>
+        <a href="/assets/img/tf-crop-left.jpg"><img src="/assets/img/tf-crop-left.jpg" alt="Cropped close-up of the LED from the left frame, showing a red gradient." loading="lazy"></a>
+        <figcaption><b>Left</b>, cropped to the source.</figcaption>
+      </figure>
+      <figure>
+        <a href="/assets/img/tf-crop-center.jpg"><img src="/assets/img/tf-crop-center.jpg" alt="Cropped close-up of the LED from the center frame." loading="lazy"></a>
+        <figcaption><b>Center</b>, cropped to the source.</figcaption>
+      </figure>
+      <figure>
+        <a href="/assets/img/tf-crop-right.jpg"><img src="/assets/img/tf-crop-right.jpg" alt="Cropped close-up of the LED from the right frame." loading="lazy"></a>
+        <figcaption><b>Right</b>, cropped to the source.</figcaption>
+      </figure>
+    </div>
+
+    <h2>Blue channel profiles</h2>
+
+    <p>Within each cropped image, the script averages the blue channel along every row and every
+      column, and plots the two profiles. The blue channel is used because it receives the least light
+      through an H&#945; filter, and therefore responds most strongly when the passband shifts.</p>
+
+    <div class="grid grid-3 bleed">
+      <figure>
+        <a href="/assets/img/tf-profile-left.png"><img src="/assets/img/tf-profile-left.png" alt="Two line plots for the left image: average blue value per column, peaking near 1200, and per row, rising to about 1400 before dropping sharply." loading="lazy"></a>
+        <figcaption><b>Left frame.</b> Blue by column, then blue by row.</figcaption>
+      </figure>
+      <figure>
+        <a href="/assets/img/tf-profile-center.png"><img src="/assets/img/tf-profile-center.png" alt="Two line plots for the center image: a symmetric arch peaking near 850, and a gentle ramp." loading="lazy"></a>
+        <figcaption><b>Center frame.</b> A symmetric arch, peaking lower.</figcaption>
+      </figure>
+      <figure>
+        <a href="/assets/img/tf-profile-right.png"><img src="/assets/img/tf-profile-right.png" alt="Two line plots for the right image: a column profile peaking near 880 and declining, and a row profile rising to about 1250." loading="lazy"></a>
+        <figcaption><b>Right frame.</b> Compare the peak height and the slope against the left.</figcaption>
+      </figure>
+    </div>
+
+    <p>All values are 14-bit RAW values, with no white balance or gamma applied. The left crop
+      peaks at roughly 1200 average blue per column, while the right crop peaks nearer 880, and the
+      two profiles are not mirrored. This is the asymmetry the method detects. A filter mounted
+      parallel to the sensor would produce two profiles that are near-reflections of each other, both
+      similar in height to the center frame.</p>
+
+    <p>The verdict is not read off the plots. For each frame, the script computes the ratio of each
+      color channel relative to the total light, compares the left and right ratios, and applies two
+      rules.</p>
+
+    <ul>
+      <li>Channels contributing less than <b>2%</b> of the total light are skipped, since
+        below that the comparison is between noise values.</li>
+      <li>If any remaining channel's ratio differs between left and right by more than
+        <b>10%</b>, the filter may be tilted.</li>
+    </ul>
+
+    <p>Ratios are used rather than absolute values. The LED is not at the same distance from the
+      lens in every shot, and vignetting darkens the edges of the frame. Both change the total amount
+      of light collected, but neither changes how that light is divided between the color channels.
+      Only the filter's passband does that.</p>
+
+    <h2>Usage</h2>
+
+    <pre><code>pip install rawpy Pillow numpy matplotlib
+
+python tiltedfilter.py \
+  --center path/to/center.CR3 \
+  --left   path/to/left.CR3 \
+  --right  path/to/right.CR3</code></pre>
+
+    <p>If no arguments are given, the script uses the filenames hardcoded at the top of the file.
+      It writes <span class="mono">center_crop.jpg</span>, <span class="mono">left_crop.jpg</span> and
+      <span class="mono">right_crop.jpg</span>, plus
+      <span class="mono">&lt;position&gt;_blue_by_column.png</span> and
+      <span class="mono">&lt;position&gt;_blue_by_row.png</span> for each of the three. The plots share
+      a y-axis so that they can be compared. The script then prints one of two lines.</p>
+
+    <pre><code>Your filter seems to have been mounted properly (parallel to the sensor).
+Your filter might be tilted.</code></pre>
+
+    <h3>Inside the script</h3>
+
+    <p>Everything lives in one <span class="mono">AstroImageAnalyzer</span> class:
+      <span class="mono">create_arr()</span> loads the CR3 through
+      <span class="mono">rawpy</span> and hands back a 16-bit RGB array;
+      <span class="mono">calc_stdev()</span> takes the per-channel mean and standard deviation;
+      <span class="mono">crop()</span> finds the bounding box of pixels above the sigma threshold;
+      <span class="mono">crop_to_jpeg()</span> writes an 8-bit preview, which is used to check that
+      the crop landed on the LED and not on a hot pixel; and
+      <span class="mono">blue_shift()</span> builds the row and column profiles. A free function
+      <span class="mono">is_it_tilted()</span> applies the two rules above, and
+      <span class="mono">_blue_plot_max_from_cropped()</span> works out the shared y-axis maximum
+      before any plotting starts.</p>
+
+    <p>The pipeline for each frame is: load &rarr; statistics &rarr; crop &rarr; statistics again.
+      Recomputing after cropping is the important part: the first pass exists only to locate the
+      light source, and every number used in the verdict comes from the second.</p>
+
+    <h2>Tested configurations</h2>
+
+    <p>Three combinations have been tested so far.</p>
+
+    <dl class="specs">
+      <div>
+        <dt>Red bike LED + 6&nbsp;nm <span class="keep-case">H&#945;</span></dt>
+        <dd><b>Works.</b> Correctly flags a tilted filter and correctly passes a properly mounted one.
+          The automatic verdict is reliable for this pairing.</dd>
+      </div>
+      <div>
+        <dt>White bike LED + 6&nbsp;nm <span class="keep-case">OIII</span></dt>
+        <dd><b>Partly.</b> Cropping and analysis work correctly, but the tilt signal is much
+          weaker, and the automatic verdict may not flag a filter that is genuinely tilted. The
+          reported left-versus-right percentage differences should be checked manually.</dd>
+      </div>
+      <div>
+        <dt>Ulanzi RGB light + 6&nbsp;nm <span class="keep-case">OIII</span></dt>
+        <dd><b>Works.</b> This source puts far more energy through an OIII filter than a white bike
+          light does, and the tilt is detected correctly.</dd>
+      </div>
+    </dl>
+
+    <p>The method depends on the match between the light source and the filter. The source must
+      emit both inside and just outside the filter's passband, so that a small shift in the band
+      produces a large change in the transmitted light. The OIII result with a white LED is therefore
+      a limitation of the light source rather than of the method.</p>
+
+    <p>Two further limitations. The test detects tilt about the vertical axis only, since left and
+      right are the only positions compared. A filter rotated about the horizontal axis would require
+      top and bottom frames and the same analysis. Additionally, the 2% and 10% thresholds
+      were chosen rather than derived. They work for the configurations above, and would need
+      revisiting for a filter of a different bandwidth.</p>
+
+    <h2>Resources</h2>
+
+    <ul class="resources">
+      <li><span class="kind">Code</span><a href="https://github.com/delphinusdelphis/Tilted-filters">delphinusdelphis/Tilted-filters</a> on GitHub &mdash; MIT licensed, Python 3</li>
+      <li><span class="kind">PDF</span><a href="/files/tilted-filters-poster.pdf">Project poster</a> &mdash; the LED frames and blue-channel profiles, in Swedish</li>
+      <li><span class="kind">PDF</span><a href="/files/tilted-filters-photos.pdf">Bench photos</a> &mdash; the blue-shift demonstration and the three LED positions</li>
+    </ul>
+
+    <nav class="post-nav bleed" aria-label="More posts">
+      <a href="/posts/cardiac-t1rho-mri.html">
+        <span class="eyebrow">Newer post</span>
+        <strong>Can T1&#961; act as an alternative to contrast agents?</strong>
+      </a>
+      <a href="/posts/milky-way-rhodes.html">
+        <span class="eyebrow">Older post</span>
+        <strong>Photographing the Milky Way from Rhodes with a non-astro-modified camera</strong>
+      </a>
+    </nav>
+
+  </div>
+</article>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <span>&copy; 2026 Ana Kostic</span>
+    <nav aria-label="Footer">
+      <a href="/">Blog</a>
+      <a href="/about.html">About</a>
+      <a href="https://github.com/delphinusdelphis">GitHub</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
